@@ -78,6 +78,12 @@ app.post('/api/notes', (request, response) => {
   response.json(note)
 })
 
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
 const PORT = 3002;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
