@@ -1,9 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
+const path = require('path');
 
 const app = express();
-const port = 3003;
 app.use(express.json());
+app.use(cors());
+
+app.use(express.static(path.join(__dirname, 'dist')));
 
 morgan.token('body', (req) => JSON.stringify(req.body));
 
@@ -98,6 +102,14 @@ app.post('/api/persons', (request, response) => {
   response.json(newPerson);
 }
 );
+
+app.get(/^\/(?!api|info).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
+
+// Escucha del servidor
+const port = process.env.PORT || 3003;
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
