@@ -42,6 +42,13 @@ const App = () => {
   
   const addPerson = (e) => {
     e.preventDefault();
+    if (newName === '' || newNumber === '') {
+      setNewName('');
+      setNewNumber('');
+      setErrorMessage('Name and number must be provided');
+      setTimeout(() => setErrorMessage(null), 3000);
+      return;
+    }
     const exists = persons.some(p => p.name === newName);
     if (exists) 
     {
