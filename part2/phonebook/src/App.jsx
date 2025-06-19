@@ -41,52 +41,54 @@ const App = () => {
   }
   
   const addPerson = (e) => {
-    e.preventDefault();
-    if (newName === '' || newNumber === '') {
-      setNewName('');
-      setNewNumber('');
-      setErrorMessage('Name and number must be provided');
-      setTimeout(() => setErrorMessage(null), 3000);
-      return;
-    }
-    const exists = persons.some(p => p.name === newName);
-    if (exists) 
-    {
-      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) 
-      {
-        const personToUpdate = persons.find(p => p.name === newName);
-        const updatedPerson = { ...personToUpdate, number: newNumber };
-        personService.update(personToUpdate.id, updatedPerson).then(returnedPerson => {
-          setPersons(persons.map(p => (p.id !== returnedPerson.id ? p : returnedPerson)));
-          setNewName('');
-          setNewNumber('');
-          setSuccessMessage(`Updated contact ${returnedPerson.name}`);
-          setTimeout(() => setSuccessMessage(null), 3000);
-        })
+      e.preventDefault();
+      if (newName === '' || newNumber === '') {
+        setNewName('');
+        setNewNumber('');
+        setErrorMessage('Name and number must be provided');
+        setTimeout(() => setErrorMessage(null), 3000);
+        return;
       }
-      return;
-    }
-    if (newName === "")
-    {
-      setErrorMessage('no valid name to add to the contact list');
-      setNewNumber('');
-      setTimeout(() => setErrorMessage(null), 3000);
-      return ;
-    }
-    const personObject = {
-      name: newName,
-      number: newNumber,
-    };
-    personService.create(personObject).then(returnedPerson => {
-    setPersons(persons.concat(returnedPerson));
-    setNewName('');
-    setNewNumber('');
-    setSuccessMessage(`added succes contact ${returnedPerson.name}`);
-    setTimeout(() => setSuccessMessage(null), 3000);
-    }).catch(error =>{
-    setErrorMessage(`Error: ${error.response?.data?.error || 'Could not add person'}`);
-    setTimeout(() => setErrorMessage(null), 5000);
-  });
+      const exists = persons.some(p => p.name === newName);
+      if (exists) 
+      {
+        if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) 
+        {
+          const personToUpdate = persons.find(p => p.name === newName);
+          const updatedPerson = { ...personToUpdate, number: newNumber };
+          personService.update(personToUpdate.id, updatedPerson).then(returnedPerson => {
+            setPersons(persons.map(p => (p.id !== returnedPerson.id ? p : returnedPerson)));
+            setNewName('');
+            setNewNumber('');
+            setSuccessMessage(`Updated contact ${returnedPerson.name}`);
+            setTimeout(() => setSuccessMessage(null), 3000);
+          })
+        }
+        return;
+      }
+      if (newName === "")
+      {
+        setErrorMessage('no valid name to add to the contact list');
+        setNewNumber('');
+        setTimeout(() => setErrorMessage(null), 3000);
+        return ;
+      }
+      const personObject = {
+        name: newName,
+        number: newNumber,
+      };
+      personService
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName('');
+        setNewNumber('');
+        setSuccessMessage(`added succes contact ${returnedPerson.name}`);
+        setTimeout(() => setSuccessMessage(null), 3000);
+      }).catch(error =>{
+      setErrorMessage(`Error: ${error.response?.data?.error || 'Could not add person'}`);
+      setTimeout(() => setErrorMessage(null), 5000);
+    });
   };
 
   return (
