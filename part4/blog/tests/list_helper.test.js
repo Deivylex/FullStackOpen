@@ -139,4 +139,14 @@ test('favorite blog is correct', () => {
   const favorite = listHelper.favoriteBlog(blogs)
   assert.deepStrictEqual(blogs[2], favorite)
 })
+
+test('most blogs author is correct', () => {
+  const mostBlogs = listHelper.mostBlogs(blogs)
+  assert.deepStrictEqual(mostBlogs, { author: 'Robert C. Martin', blogs: 3 })
+})
+
+test('most likes author is correct', () => {
+  const mostLikes = listHelper.mostLikes(blogs)
+  assert.deepStrictEqual(mostLikes, { author: 'Edsger W. Dijkstra', likes: 17 })
+})
 })
