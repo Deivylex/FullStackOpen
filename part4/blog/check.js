@@ -54,8 +54,11 @@ __v: 0
 const test = () => {
     const exam = helperList.mostBlogs(blogs);
     console.log('in test', exam);
+<<<<<<< HEAD
     const mostLikes = helperList.mostLikes(blogs)
     console.log('mostLikes', mostLikes);
+=======
+>>>>>>> 1bbff4ee2f435160f5c0ed5402a872e117a3a392
 }
 
 test();
