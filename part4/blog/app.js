@@ -1,3 +1,4 @@
+require('express-async-errors')
 const logger = require('./utils/logger')
 const config = require('./utils/config')
 const blogRouter = require('./controllers/blogs')
@@ -18,5 +19,6 @@ app.use(express.json())
 app.use(middleware.requestLogger)
 app.use('/api/blogs', blogRouter)
 app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 module.exports = app
