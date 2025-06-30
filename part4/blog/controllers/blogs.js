@@ -33,9 +33,9 @@ blogRouter.put('/:id', async (req, res) => {
     if(!blog){
         return res.status(404).end()
     }
-    blog.title =  req.body.title
-    blog.author =  req.body.author
-    blog.url =  req.body.url
+    blog.title =  req.body.title || blog.title
+    blog.author =  req.body.author || blog.author
+    blog.url =  req.body.url || blog.url
     blog.likes =  req.body.likes
     const response =  await blog.save()
     res.json(response)
