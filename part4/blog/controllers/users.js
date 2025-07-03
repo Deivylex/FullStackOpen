@@ -6,7 +6,6 @@ const logger = require('../utils/logger')
 
 usersRoute.get('/', async(req, res) => {
     const response = await Users.find({}).populate('blogs', {title: 1, author: 1, url: 1, likes: 1})
-    logger.info('response: ', response)
     res.json(response)
 })
 
@@ -22,7 +21,7 @@ usersRoute.post('/', async(req, res) => {
     const newUser = new Users({
         username: body.username,
         name: body.name,
-        password: passwordHash
+        passwordHash: passwordHash
     })
     const response = await newUser.save()
 
