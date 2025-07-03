@@ -3,17 +3,27 @@ const mongoose = require('mongoose')
 const userSchema = mongoose.Schema({
     username: {
         type: String,
+        required: true,
+        unique: true,
+        validate: {
+            validator: function(v) {
+                return v && v.trim().length > 2
+        },
+        message: function(props) {
+            return `:'${props.value}' is invalid, must be at least 3 characters long`
+        }
+    }
     },
     name: {
-        type: string
+        type: String
     },
     passwordHash: {
-        type: string
+        type: String,
     },
     blogs: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Blogs'
+            ref: 'Blog'
         }
     ]
 })
