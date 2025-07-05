@@ -33,9 +33,38 @@ let blogs = [
   }
 ]
 
+const initialUser = [
+  {
+    username: 'jose',
+    name: 'pp',
+    password: '12345'
+  },
+  {
+    username: 'carlos',
+    name: 'pp',
+    password: '12345'
+  }
+]
+
+const userInDb = async() => {
+  const users = await api.get('/api/users')
+  return users.body
+}
+
+const validToken = async() => {
+  const user = {
+      username: initialUser[0].username,
+      password: initialUser[0].password
+  }
+  const login = await api
+                .post('/api/login')
+                .send(user)
+  return login.body
+}
+
 const blogsInDB = async () => {
     const response = await api.get('/api/blogs')
     return response.body
 }
 
-module.exports = { initialBlogs, blogsInDB, blogs }
+module.exports = { initialBlogs, blogsInDB, blogs, initialUser, userInDb, validToken }
